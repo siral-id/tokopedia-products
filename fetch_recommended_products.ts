@@ -10,7 +10,7 @@ import {
   sleep,
 } from "https://raw.githubusercontent.com/siral-id/deno-utility/main/utility.ts";
 
-const sleepDuration = 100;
+const sleepDuration = 10;
 
 const mongoUri = Deno.env.get("MONGO_URI");
 if (!mongoUri) throw new Error("MONGO_URI not found");
@@ -25,16 +25,15 @@ const key = "name";
 const uniqueLocations = [
   ...new Map(locations.map((item) => [item[key], item])).values(),
 ]
-uniqueLocations.slice(0,100)
 
-await Promise.all(uniqueLocations.map(async ({ name, cityId }) => {
+for (const {name, cityId} of uniqueLocations){
   let isThereNextSearch = true;
   let page = 1;
 
   while (isThereNextSearch != false) {
     const location =
       `user_addressId=0&user_cityId=${cityId}&user_districtId=&user_lat=&user_long=&user_postCode=`;
-    console.log({name, cityId})
+    console.log({name, cityId, page})
 
     const graphql = JSON.stringify({
       query: recommendationFeedQuery,
@@ -84,5 +83,4 @@ await Promise.all(uniqueLocations.map(async ({ name, cityId }) => {
 
     await sleep(sleepDuration);
   }
-  await sleep(sleepDuration);
-}));
+};
