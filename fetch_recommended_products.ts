@@ -16,7 +16,7 @@ const sleepDuration = 1;
 const mongoUri = Deno.env.get("MONGO_URI");
 if (!mongoUri) throw new Error("MONGO_URI not found");
 const client = await getMongoClient(mongoUri);
-const productCollection = client.database().productCollection<
+const productCollection = client.database().collection<
   ITokopediaRecommendationProductSchema
 >("products");
 
