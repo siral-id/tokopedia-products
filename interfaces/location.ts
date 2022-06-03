@@ -30,8 +30,8 @@ export interface ITokopediaFilterSortProductSort {
 export interface ITokopediaFilterSortProductFilter {
   title: string;
   template_name: string;
-  search: ITokopediaFilterSortProductFilterSearch
-  options: ITokopediaFilterSortProductFilterOption[]
+  search: ITokopediaFilterSortProductFilterSearch;
+  options: ITokopediaFilterSortProductFilterOption[];
 }
 
 export interface ITokopediaFilterSortProductFilterSortProductData {
@@ -40,15 +40,15 @@ export interface ITokopediaFilterSortProductFilterSortProductData {
 }
 
 export interface ITokopediaFilterSortProductFilterSortProduct {
-  data: ITokopediaFilterSortProductFilterSortProductData
+  data: ITokopediaFilterSortProductFilterSortProductData;
 }
 
 export interface ITokopediaFilterSortProductData {
-  filter_sort_product: ITokopediaFilterSortProductFilterSortProduct
+  filter_sort_product: ITokopediaFilterSortProductFilterSortProduct;
 }
 
 export interface ITokopediaFilterSortProductResponse {
-  data: ITokopediaFilterSortProductData
+  data: ITokopediaFilterSortProductData;
 }
 
 export interface ITokopediaLocation {

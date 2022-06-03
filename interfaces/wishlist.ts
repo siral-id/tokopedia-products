@@ -1,3 +1,3 @@
-export interface ITokopediaWishlist{
-    value: boolean
+export interface ITokopediaWishlist {
+  value: boolean;
 }

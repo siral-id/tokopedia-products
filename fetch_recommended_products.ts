@@ -10,30 +10,31 @@ import {
   sleep,
 } from "https://raw.githubusercontent.com/siral-id/deno-utility/main/utility.ts";
 
-const sleepDuration = 10;
-
+//configuration
+const sleepDuration = 1;
+// initialize database
 const mongoUri = Deno.env.get("MONGO_URI");
 if (!mongoUri) throw new Error("MONGO_URI not found");
-
 const client = await getMongoClient(mongoUri);
-const collection = client.database().collection<
+const productCollection = client.database().productCollection<
   ITokopediaRecommendationProductSchema
 >("products");
 
+// get city id from another function so we can get recommendation across different location
 const locations = await getLocations();
 const key = "name";
 const uniqueLocations = [
   ...new Map(locations.map((item) => [item[key], item])).values(),
-]
+];
 
-for (const {name, cityId} of uniqueLocations){
+for (const { name, cityId } of uniqueLocations) {
   let isThereNextSearch = true;
   let page = 1;
 
   while (isThereNextSearch != false) {
     const location =
       `user_addressId=0&user_cityId=${cityId}&user_districtId=&user_lat=&user_long=&user_postCode=`;
-    console.log({name, cityId, page})
+    console.log({ name, cityId, page });
 
     const graphql = JSON.stringify({
       query: recommendationFeedQuery,
@@ -56,16 +57,16 @@ for (const {name, cityId} of uniqueLocations){
       redirect: "follow",
     };
 
-    const url = "https://gql.tokopedia.com/graphql/RecommendationFeedQuery"
+    const url = "https://gql.tokopedia.com/graphql/RecommendationFeedQuery";
 
-    let response
-    try{
+    let response;
+    try {
       response = await fetch(url, requestOptions);
-    }catch(error){
-      console.error(error)
+    } catch (error) {
+      console.error(error);
       throw error;
     }
-    console.log(response)
+    console.log(response);
 
     const data: ITokopediaRecommendationProductResponse = await response.json();
 
@@ -76,11 +77,11 @@ for (const {name, cityId} of uniqueLocations){
       (product) => ({ ...product, source: "TOKOPEDIA" }),
     );
 
-    await collection.insertMany(products);
+    await productCollection.insertMany(products);
     // prevent hammering the api source
     isThereNextSearch = hasNextPage;
     page += 1;
 
     await sleep(sleepDuration);
   }
-};
+}
