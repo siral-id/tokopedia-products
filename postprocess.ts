@@ -31,6 +31,10 @@ const fetchWithRetry = async <T>(
       url,
       requestOptions,
     );
+    if(response.headers.get("content-type") !== "application/json") { 
+      console.log(response.headers)
+      throw new Error("invalid json")
+    }
     return response.json();
   } catch (error) {
     console.error(error);
