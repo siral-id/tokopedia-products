@@ -24,13 +24,14 @@ const fetchWithRetry = async <T>(
   retryCount = 0,
   maxRetry = 60,
   lastError?: string,
-): Promise<Response> => {
+): Promise<T> => {
   if (retryCount > maxRetry) throw new Error(lastError);
   try {
-    return _internals.fetch(
+    const response = await _internals.fetch(
       url,
       requestOptions,
     );
+    return response.json();
   } catch (error) {
     console.error(error);
     await sleep(retryCount);
@@ -54,9 +55,10 @@ export async function fetchLocations(): Promise<ITokopediaLocation[]> {
   };
 
   const url = "https://gql.tokopedia.com";
-  const response = await _internals.fetch(url, requestOptions);
-  console.log(response);
-  const data: ITokopediaFilterSortProductResponse = await response.json();
+  const data = await fetchWithRetry<ITokopediaFilterSortProductResponse>(
+    url,
+    requestOptions,
+  );
 
   const filters = data["data"]["filter_sort_product"]["data"]["filter"];
   const locationFilter = filters.find(({ title }) => title === "Lokasi");
@@ -96,8 +98,10 @@ export async function fetchProductDetail(
   };
 
   const gqlUrl = "https://gql.tokopedia.com";
-  const response = await fetchWithRetry(gqlUrl, requestOptions);
-  const { data }: ITokopediaPdpGetLayoutResponse = await response.json();
+  const { data } = await fetchWithRetry<ITokopediaPdpGetLayoutResponse>(
+    gqlUrl,
+    requestOptions,
+  );
   console.log(data);
   const { pdpGetLayout } = data;
 
@@ -167,10 +171,9 @@ export async function fetchRecommendedProducts(
           const gqlUrl =
             "https://gql.tokopedia.com/graphql/RecommendationFeedQuery";
 
-          const response = await fetchWithRetry(gqlUrl, requestOptions);
-
-          const data: ITokopediaRecommendationProductResponse = await response
-            .json();
+          const data = await fetchWithRetry<
+            ITokopediaRecommendationProductResponse
+          >(gqlUrl, requestOptions);
 
           const {
             product: products,
@@ -261,10 +264,10 @@ export async function fetchTrendingProducts(
 
         const gqlUrl = "https://gql.tokopedia.com/graphql/SearchProductQueryV4";
 
-        const response = await fetchWithRetry(gqlUrl, requestOptions);
-
-        const data: ITokopediaSearchProductResponse = await response
-          .json();
+        const data = await fetchWithRetry<ITokopediaSearchProductResponse>(
+          gqlUrl,
+          requestOptions,
+        );
 
         const { products } = data["data"]["ace_search_product_v4"]["data"];
 
