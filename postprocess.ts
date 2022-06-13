@@ -129,7 +129,7 @@ export async function fetchProductDetail(
 
 export async function fetchRecommendedProducts(
   locations: ITokopediaLocation[],
-  maxConcurrency = 10,
+  maxConcurrency = 1,
 ): Promise<ICreateProductWithImages[]> {
   const serializedProducts: ICreateProductWithImages[] = [];
 
@@ -230,7 +230,7 @@ export async function fetchTrendingProducts(
   { cityId }: ITokopediaLocation,
   keyword: string,
   noOfPages = 10,
-  maxConcurrency = 5,
+  maxConcurrency = 1,
 ): Promise<ICreateProductWithImages[]> {
   const pages = Array.from(Array(noOfPages).keys());
 
