@@ -55,7 +55,7 @@ export async function fetchLocations(): Promise<ITokopediaLocation[]> {
 
   const url = "https://gql.tokopedia.com";
   const response = await _internals.fetch(url, requestOptions);
-  console.log(response)
+  console.log(response);
   const data: ITokopediaFilterSortProductResponse = await response.json();
 
   const filters = data["data"]["filter_sort_product"]["data"]["filter"];
@@ -90,7 +90,7 @@ export async function fetchProductDetail(
 
   const requestOptions: RequestInit = {
     method: "POST",
-    headers: { "x-tkpd-akamai": "pdpGetLayout", ...tokopediaHeader},
+    headers: { "x-tkpd-akamai": "pdpGetLayout", ...tokopediaHeader },
     body: graphql,
     redirect: "follow",
   };
@@ -230,73 +230,83 @@ export async function fetchTrendingProducts(
   { cityId }: ITokopediaLocation,
   keyword: string,
   noOfPages = 10,
+  maxConcurrency = 5,
 ): Promise<ICreateProductWithImages[]> {
   const pages = Array.from(Array(noOfPages).keys());
 
   const serializedProducts: ICreateProductWithImages[] = [];
 
-  await Promise.all(pages.map(async (page) => {
-    let uuid = crypto.randomUUID();
-    uuid = uuid.replace("-", "");
+  while (pages.length) {
+    await Promise.all(
+      pages.splice(0, maxConcurrency).map(async (page) => {
+        let uuid = crypto.randomUUID();
+        uuid = uuid.replace("-", "");
 
-    const params =
-      `device=desktop&navsource=home&ob=23&page=${page}&q=${keyword}&related=true&rows=60&safe_search=false&scheme=https&shipping=&source=search&srp_component_id=02.01.00.00&st=product&start=0&topads_bucket=true&unique_id=${uuid}&user_addressId=&user_cityId=${cityId}&user_districtId=&user_id=&user_lat=&user_long=&user_postCode=&user_warehouseId=&variants=`;
+        const params =
+          `device=desktop&navsource=home&ob=23&page=${page}&q=${keyword}&related=true&rows=60&safe_search=false&scheme=https&shipping=&source=search&srp_component_id=02.01.00.00&st=product&start=0&topads_bucket=true&unique_id=${uuid}&user_addressId=&user_cityId=${cityId}&user_districtId=&user_id=&user_lat=&user_long=&user_postCode=&user_warehouseId=&variants=`;
 
-    const graphql = JSON.stringify({
-      query: searchProductQueryV4,
-      variables: {
-        "params": params,
-      },
-    });
+        const graphql = JSON.stringify({
+          query: searchProductQueryV4,
+          variables: {
+            "params": params,
+          },
+        });
 
-    const requestOptions: RequestInit = {
-      method: "POST",
-      headers: tokopediaHeader,
-      body: graphql,
-      redirect: "follow",
-    };
+        const requestOptions: RequestInit = {
+          method: "POST",
+          headers: tokopediaHeader,
+          body: graphql,
+          redirect: "follow",
+        };
 
-    const gqlUrl = "https://gql.tokopedia.com/graphql/SearchProductQueryV4";
+        const gqlUrl = "https://gql.tokopedia.com/graphql/SearchProductQueryV4";
 
-    const response = await fetchWithRetry(gqlUrl, requestOptions);
+        const response = await fetchWithRetry(gqlUrl, requestOptions);
 
-    const data: ITokopediaSearchProductResponse = await response
-      .json();
+        const data: ITokopediaSearchProductResponse = await response
+          .json();
 
-    const { products } = data["data"]["ace_search_product_v4"]["data"];
+        const { products } = data["data"]["ace_search_product_v4"]["data"];
 
-    await Promise.all(products.map(async ({
-      id,
-      name,
-      url,
-      priceInt,
-      ratingAverage,
-      countReview: ratingCount,
-      discountPercentage,
-      imageUrl,
-    }) => {
-      const { description, sold, view, stock } = await fetchProductDetail(
-        url,
-      );
-      serializedProducts.push(
-        {
-          externalId: id.toString(),
-          name,
-          url,
-          price: priceInt,
-          ratingAverage: Number(ratingAverage),
-          ratingCount,
-          discount: discountPercentage,
-          description,
-          sold,
-          stock,
-          view,
-          source: Source.TOKOPEDIA,
-          images: [imageUrl],
-        },
-      );
-    }));
-  }));
+        while (products.length) {
+          await Promise.all(
+            products.splice(0, maxConcurrency).map(async ({
+              id,
+              name,
+              url,
+              priceInt,
+              ratingAverage,
+              countReview: ratingCount,
+              discountPercentage,
+              imageUrl,
+            }) => {
+              const { description, sold, view, stock } =
+                await fetchProductDetail(
+                  url,
+                );
+              serializedProducts.push(
+                {
+                  externalId: id.toString(),
+                  name,
+                  url,
+                  price: priceInt,
+                  ratingAverage: Number(ratingAverage),
+                  ratingCount,
+                  discount: discountPercentage,
+                  description,
+                  sold,
+                  stock,
+                  view,
+                  source: Source.TOKOPEDIA,
+                  images: [imageUrl],
+                },
+              );
+            }),
+          );
+        }
+      }),
+    );
+  }
   return serializedProducts;
 }
 
