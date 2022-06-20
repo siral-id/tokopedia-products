@@ -22,7 +22,7 @@ const fetchWithRetry = async <T>(
   url: string,
   requestOptions: RequestInit,
   retryCount = 0,
-  maxRetry = 60,
+  maxRetry = 10,
   lastError?: string,
 ): Promise<T> => {
   if (retryCount > maxRetry) throw new Error(lastError);
