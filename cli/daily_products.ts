@@ -7,14 +7,16 @@ import {
   uploadWithRetry,
 } from "https://raw.githubusercontent.com/siral-id/core/main/mod.ts";
 
+const index = Number(Deno.args[0]);
 const ghToken = Deno.env.get("GH_TOKEN");
 
 const octokit = setupOctokit(ghToken);
 
+// we only interest in first 40 items
 const locations = await fetchLocations();
 
 const products: ICreateProductWithImages[] = await fetchRecommendedProducts(
-  locations,
+  [locations[index]],
 );
 
 await Promise.all(

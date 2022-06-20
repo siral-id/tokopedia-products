@@ -31,9 +31,9 @@ const fetchWithRetry = async <T>(
       url,
       requestOptions,
     );
-    if(response.headers.get("content-type") !== "application/json") { 
-      console.log(response.headers)
-      throw new Error("invalid json")
+    if (response.headers.get("content-type") !== "application/json") {
+      console.log(response.headers);
+      throw new Error("invalid json");
     }
     return response.json();
   } catch (error) {
@@ -234,7 +234,6 @@ export async function fetchRecommendedProducts(
 }
 
 export async function fetchTrendingProducts(
-  { cityId }: ITokopediaLocation,
   keyword: string,
   noOfPages = 10,
   maxConcurrency = 1,
@@ -250,7 +249,7 @@ export async function fetchTrendingProducts(
         uuid = uuid.replace("-", "");
 
         const params =
-          `device=desktop&navsource=home&ob=23&page=${page}&q=${keyword}&related=true&rows=60&safe_search=false&scheme=https&shipping=&source=search&srp_component_id=02.01.00.00&st=product&start=0&topads_bucket=true&unique_id=${uuid}&user_addressId=&user_cityId=${cityId}&user_districtId=&user_id=&user_lat=&user_long=&user_postCode=&user_warehouseId=&variants=`;
+          `device=desktop&navsource=home&ob=23&page=${page}&q=${keyword}&related=true&rows=60&safe_search=false&scheme=https&shipping=&source=search&srp_component_id=02.01.00.00&st=product&start=0&topads_bucket=true&unique_id=${uuid}&user_addressId=&user_cityId=&user_districtId=&user_id=&user_lat=&user_long=&user_postCode=&user_warehouseId=&variants=`;
 
         const graphql = JSON.stringify({
           query: searchProductQueryV4,
