@@ -15,26 +15,27 @@ jobs:
     strategy:
       matrix:
         index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        - index: 0
-          GH_TOKEN: ${{ secrets.GH_TOKEN_0 }}
-        - index: 1
-          GH_TOKEN: ${{ secrets.GH_TOKEN_1 }}
-        - index: 2
-          GH_TOKEN: ${{ secrets.GH_TOKEN_2 }}
-        - index: 3
-          GH_TOKEN: ${{ secrets.GH_TOKEN_3 }}
-        - index: 4
-          GH_TOKEN: ${{ secrets.GH_TOKEN_4 }}
-        - index: 5
-          GH_TOKEN: ${{ secrets.GH_TOKEN_5 }}
-        - index: 6
-          GH_TOKEN: ${{ secrets.GH_TOKEN_6 }}
-        - index: 7
-          GH_TOKEN: ${{ secrets.GH_TOKEN_7 }}
-        - index: 8
-          GH_TOKEN: ${{ secrets.GH_TOKEN_8 }}
-        - index: 9
-          GH_TOKEN: ${{ secrets.GH_TOKEN_9 }}
+        include:
+          - index: 0
+            GH_TOKEN: ${{ secrets.GH_TOKEN_0 }}
+          - index: 1
+            GH_TOKEN: ${{ secrets.GH_TOKEN_1 }}
+          - index: 2
+            GH_TOKEN: ${{ secrets.GH_TOKEN_2 }}
+          - index: 3
+            GH_TOKEN: ${{ secrets.GH_TOKEN_3 }}
+          - index: 4
+            GH_TOKEN: ${{ secrets.GH_TOKEN_4 }}
+          - index: 5
+            GH_TOKEN: ${{ secrets.GH_TOKEN_5 }}
+          - index: 6
+            GH_TOKEN: ${{ secrets.GH_TOKEN_6 }}
+          - index: 7
+            GH_TOKEN: ${{ secrets.GH_TOKEN_7 }}
+          - index: 8
+            GH_TOKEN: ${{ secrets.GH_TOKEN_8 }}
+          - index: 9
+            GH_TOKEN: ${{ secrets.GH_TOKEN_9 }}
 
     runs-on: ubuntu-latest
     steps:
@@ -59,26 +60,27 @@ jobs:
     strategy:
       matrix:
         index: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
-        - index: 10
-          GH_TOKEN: ${{ secrets.GH_TOKEN_0 }}
-        - index: 11
-          GH_TOKEN: ${{ secrets.GH_TOKEN_1 }}
-        - index: 12
-          GH_TOKEN: ${{ secrets.GH_TOKEN_2 }}
-        - index: 13
-          GH_TOKEN: ${{ secrets.GH_TOKEN_3 }}
-        - index: 14
-          GH_TOKEN: ${{ secrets.GH_TOKEN_4 }}
-        - index: 15
-          GH_TOKEN: ${{ secrets.GH_TOKEN_5 }}
-        - index: 16
-          GH_TOKEN: ${{ secrets.GH_TOKEN_6 }}
-        - index: 17
-          GH_TOKEN: ${{ secrets.GH_TOKEN_7 }}
-        - index: 18
-          GH_TOKEN: ${{ secrets.GH_TOKEN_8 }}
-        - index: 19
-          GH_TOKEN: ${{ secrets.GH_TOKEN_9 }}
+        include:
+          - index: 10
+            GH_TOKEN: ${{ secrets.GH_TOKEN_0 }}
+          - index: 11
+            GH_TOKEN: ${{ secrets.GH_TOKEN_1 }}
+          - index: 12
+            GH_TOKEN: ${{ secrets.GH_TOKEN_2 }}
+          - index: 13
+            GH_TOKEN: ${{ secrets.GH_TOKEN_3 }}
+          - index: 14
+            GH_TOKEN: ${{ secrets.GH_TOKEN_4 }}
+          - index: 15
+            GH_TOKEN: ${{ secrets.GH_TOKEN_5 }}
+          - index: 16
+            GH_TOKEN: ${{ secrets.GH_TOKEN_6 }}
+          - index: 17
+            GH_TOKEN: ${{ secrets.GH_TOKEN_7 }}
+          - index: 18
+            GH_TOKEN: ${{ secrets.GH_TOKEN_8 }}
+          - index: 19
+            GH_TOKEN: ${{ secrets.GH_TOKEN_9 }}
 
     runs-on: ubuntu-latest
     steps:
@@ -103,26 +105,27 @@ jobs:
     strategy:
       matrix:
         index: [20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
-        - index: 20
-          GH_TOKEN: ${{ secrets.GH_TOKEN_0 }}
-        - index: 21
-          GH_TOKEN: ${{ secrets.GH_TOKEN_1 }}
-        - index: 22
-          GH_TOKEN: ${{ secrets.GH_TOKEN_2 }}
-        - index: 23
-          GH_TOKEN: ${{ secrets.GH_TOKEN_3 }}
-        - index: 24
-          GH_TOKEN: ${{ secrets.GH_TOKEN_4 }}
-        - index: 25
-          GH_TOKEN: ${{ secrets.GH_TOKEN_5 }}
-        - index: 26
-          GH_TOKEN: ${{ secrets.GH_TOKEN_6 }}
-        - index: 27
-          GH_TOKEN: ${{ secrets.GH_TOKEN_7 }}
-        - index: 28
-          GH_TOKEN: ${{ secrets.GH_TOKEN_8 }}
-        - index: 29
-          GH_TOKEN: ${{ secrets.GH_TOKEN_9 }}
+        include:
+          - index: 20
+            GH_TOKEN: ${{ secrets.GH_TOKEN_0 }}
+          - index: 21
+            GH_TOKEN: ${{ secrets.GH_TOKEN_1 }}
+          - index: 22
+            GH_TOKEN: ${{ secrets.GH_TOKEN_2 }}
+          - index: 23
+            GH_TOKEN: ${{ secrets.GH_TOKEN_3 }}
+          - index: 24
+            GH_TOKEN: ${{ secrets.GH_TOKEN_4 }}
+          - index: 25
+            GH_TOKEN: ${{ secrets.GH_TOKEN_5 }}
+          - index: 26
+            GH_TOKEN: ${{ secrets.GH_TOKEN_6 }}
+          - index: 27
+            GH_TOKEN: ${{ secrets.GH_TOKEN_7 }}
+          - index: 28
+            GH_TOKEN: ${{ secrets.GH_TOKEN_8 }}
+          - index: 29
+            GH_TOKEN: ${{ secrets.GH_TOKEN_9 }}
 
     runs-on: ubuntu-latest
     steps:
@@ -147,26 +150,27 @@ jobs:
     strategy:
       matrix:
         index: [30, 31, 32, 33, 34, 35, 36, 37, 38, 39]
-        - index: 30
-          GH_TOKEN: ${{ secrets.GH_TOKEN_0 }}
-        - index: 31
-          GH_TOKEN: ${{ secrets.GH_TOKEN_1 }}
-        - index: 32
-          GH_TOKEN: ${{ secrets.GH_TOKEN_2 }}
-        - index: 33
-          GH_TOKEN: ${{ secrets.GH_TOKEN_3 }}
-        - index: 34
-          GH_TOKEN: ${{ secrets.GH_TOKEN_4 }}
-        - index: 35
-          GH_TOKEN: ${{ secrets.GH_TOKEN_5 }}
-        - index: 36
-          GH_TOKEN: ${{ secrets.GH_TOKEN_6 }}
-        - index: 37
-          GH_TOKEN: ${{ secrets.GH_TOKEN_7 }}
-        - index: 38
-          GH_TOKEN: ${{ secrets.GH_TOKEN_8 }}
-        - index: 39
-          GH_TOKEN: ${{ secrets.GH_TOKEN_9 }}
+        include:
+          - index: 30
+            GH_TOKEN: ${{ secrets.GH_TOKEN_0 }}
+          - index: 31
+            GH_TOKEN: ${{ secrets.GH_TOKEN_1 }}
+          - index: 32
+            GH_TOKEN: ${{ secrets.GH_TOKEN_2 }}
+          - index: 33
+            GH_TOKEN: ${{ secrets.GH_TOKEN_3 }}
+          - index: 34
+            GH_TOKEN: ${{ secrets.GH_TOKEN_4 }}
+          - index: 35
+            GH_TOKEN: ${{ secrets.GH_TOKEN_5 }}
+          - index: 36
+            GH_TOKEN: ${{ secrets.GH_TOKEN_6 }}
+          - index: 37
+            GH_TOKEN: ${{ secrets.GH_TOKEN_7 }}
+          - index: 38
+            GH_TOKEN: ${{ secrets.GH_TOKEN_8 }}
+          - index: 39
+            GH_TOKEN: ${{ secrets.GH_TOKEN_9 }}
 
     runs-on: ubuntu-latest
     steps:
