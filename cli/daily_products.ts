@@ -11,7 +11,7 @@ import {
 const index = Number(Deno.args[0]);
 const ghToken = Deno.env.get("GH_TOKEN");
 
-if (!index) throw new Error("missing page index");
+if (index === undefined && index === null) throw new Error("missing page index");
 
 const octokit = setupOctokit(ghToken);
 
