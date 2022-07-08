@@ -14,8 +14,9 @@ const uniqueKeywords: string[] = JSON.parse(rawData);
 if (!uniqueKeywords) throw new Error("missing keywords arguments");
 
 const index = Number(Deno.args[1]);
-if (index === undefined && index === null) throw new Error("missing page index");
-
+if (index === undefined && index === null) {
+  throw new Error("missing page index");
+}
 
 const octokit = setupOctokit(ghToken);
 
