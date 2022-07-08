@@ -9,10 +9,13 @@ import {
 
 const ghToken = Deno.env.get("GH_TOKEN");
 
-const rawData = Deno.args[0]; // Same name as downloaded_filename
+const rawData = Deno.args[0];
 const uniqueKeywords: string[] = JSON.parse(rawData);
+if (!uniqueKeywords) throw new Error("missing keywords arguments");
 
 const index = Number(Deno.args[1]);
+if (index === undefined && index === null) throw new Error("missing page index");
+
 
 const octokit = setupOctokit(ghToken);
 
