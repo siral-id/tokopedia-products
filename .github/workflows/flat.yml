@@ -13,9 +13,9 @@ jobs:
   # split 40 jobs to 4 jobs with 10 item each
   recommended_products:
     strategy:
+      max-parallel: 2
       matrix:
         index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        max-parallel: 2
         include:
           - index: 0
             GH_TOKEN: GH_TOKEN_0
