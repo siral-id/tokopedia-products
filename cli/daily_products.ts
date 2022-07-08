@@ -29,11 +29,11 @@ const chunks = chunkItems(products, maxGistSize);
 
 const gists = await Promise.all(
   chunks.map(async (chunk) => {
-    const response = await createGistWithRetry<string>(
+    const { data: { id } } = await createGistWithRetry<string>(
       octokit,
       JSON.stringify(chunk),
     );
-    return response.data.id;
+    return id;
   }),
 );
 
