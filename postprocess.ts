@@ -179,6 +179,8 @@ export async function fetchRecommendedProducts(
             ITokopediaRecommendationProductResponse
           >(gqlUrl, requestOptions);
 
+          console.info(data);
+
           const {
             product: products,
             hasNextPage,
@@ -194,7 +196,7 @@ export async function fetchRecommendedProducts(
                 ratingAverage,
                 countReview: ratingCount,
                 discountPercentage,
-                imageUrl,
+                imageURL,
               }) => {
                 const data = await fetchProductDetail(
                   url,
@@ -217,7 +219,7 @@ export async function fetchRecommendedProducts(
                     stock,
                     view,
                     source: Source.TOKOPEDIA,
-                    images: [imageUrl],
+                    images: [imageURL],
                   },
                 );
               }),
@@ -284,7 +286,7 @@ export async function fetchTrendingProducts(
               ratingAverage,
               countReview: ratingCount,
               discountPercentage,
-              imageUrl,
+              imageURL,
             }) => {
               const { description, sold, view, stock } =
                 await fetchProductDetail(
@@ -304,7 +306,7 @@ export async function fetchTrendingProducts(
                   stock,
                   view,
                   source: Source.TOKOPEDIA,
-                  images: [imageUrl],
+                  images: [imageURL],
                 },
               );
             }),

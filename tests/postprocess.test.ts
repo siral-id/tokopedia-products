@@ -1,6 +1,4 @@
-import {
-  assertEquals,
-} from "https://deno.land/std@0.142.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.142.0/testing/asserts.ts";
 import {
   assertSpyCalls,
   returnsNext,
@@ -34,7 +32,7 @@ Deno.test("Make sure fetchLocations is correct", async () => {
 
   const response = await fetchLocations();
 
-  assertEquals(response.length, 1)
+  assertEquals(response.length, 1);
 
   assertSpyCalls(stubPostprocessFetch, 1);
 
@@ -74,7 +72,7 @@ Deno.test("Make sure fetchRecommendedProducts is correct", async () => {
     cityId: "1",
   }]);
 
-  assertEquals(result.length, 1)
+  assertEquals(result.length, 1);
 
   assertSpyCalls(stubPostprocessFetch, 2);
 
@@ -96,7 +94,7 @@ Deno.test("Make sure fetchTrendingProducts is correct", async () => {
     1,
   );
 
-  assertEquals(result.length, 1)
+  assertEquals(result.length, 1);
 
   assertSpyCalls(stubPostprocessFetch, 2);
 

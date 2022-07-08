@@ -1,4 +1,3 @@
-import { Bson } from "https://deno.land/x/mongo@v0.30.0/mod.ts";
 import { ITokopediaSearchProduct } from "./product.ts";
 
 export interface ITokopediaSearchProductAceSearchProductV4Data {
@@ -22,9 +21,4 @@ export interface ITokopediaSearchProductData {
 
 export interface ITokopediaSearchProductResponse {
   data: ITokopediaSearchProductData;
-}
-
-export interface ITokopediaSearchProductSchema extends ITokopediaSearchProduct {
-  _id: Bson.ObjectId;
-  source: string;
 }

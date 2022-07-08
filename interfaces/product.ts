@@ -29,7 +29,7 @@ export interface ITokopediaProduct {
   category: number;
   countReview: number;
   discountPercentage: number;
-  imageUrl: string;
+  imageURL: string;
   labelGroups: ITokopediaLabel[];
   price: string;
   priceInt: number;
@@ -48,7 +48,7 @@ export interface ITokopediaSearchProduct extends ITokopediaProduct {
   gaKey: string;
   stock: number;
   discountPercentage: number;
-  imageUrl: string;
+  imageURL: string;
   originalPrice: string;
   priceRange: string;
   wishlist: boolean;

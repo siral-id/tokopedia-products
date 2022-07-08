@@ -1,7 +1,7 @@
 import { fetchTrendingProducts } from "../mod.ts";
 import {
   chunkItems,
-  ICreateProductWithImages,
+  createGistWithRetry,
   Pipeline,
   setupOctokit,
   uploadWithRetry,
@@ -18,14 +18,23 @@ const octokit = setupOctokit(ghToken);
 
 const products = await fetchTrendingProducts(uniqueKeywords[index]);
 
-await Promise.all(
-  chunkItems(products).map(async (chunk) =>
-    await uploadWithRetry<ICreateProductWithImages[]>(
+const maxGistSize = 1048576;
+const chunks = chunkItems(products, maxGistSize);
+
+const gists = await Promise.all(
+  chunks.map(async (chunk) => {
+    const { data: { id } } = await createGistWithRetry<string>(
       octokit,
-      chunk,
-      Pipeline.TokopediaProducts,
-    )
-  ),
+      JSON.stringify(chunk),
+    );
+    return id;
+  }),
+);
+
+await uploadWithRetry<string>(
+  octokit,
+  JSON.stringify(gists),
+  Pipeline.TokopediaProducts,
 );
 
 Deno.exit();
