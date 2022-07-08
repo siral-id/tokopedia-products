@@ -1,4 +1,3 @@
-import { Bson } from "https://deno.land/x/mongo@v0.30.0/mod.ts";
 import { ITokopediaRecommendationProduct } from "./product.ts";
 
 export interface ITokopediaRecommendationProductGetHomeRecommendationRecommendationProduct {
@@ -18,10 +17,4 @@ export interface ITokopediaRecommendationProductData {
 
 export interface ITokopediaRecommendationProductResponse {
   data: ITokopediaRecommendationProductData;
-}
-
-export interface ITokopediaRecommendationProductSchema
-  extends ITokopediaRecommendationProduct {
-  _id: Bson.ObjectId;
-  source: string;
 }
