@@ -12,6 +12,12 @@ on:
 jobs:
   # split 40 jobs to 4 jobs with 10 item each
   recommended_products:
+    services:
+      proxy:
+        image: mattes/rotating-proxy
+        env:
+          tors: 25
+
     strategy:
       max-parallel: 1
       matrix:
@@ -48,8 +54,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
 
+      - name: Wait for
+        run: sleep 120
+
       - name: Fetch Tokopedia Recommended Product
         run: |
+           echo HTTP_PROXY=http://proxy:5566 >> .env
            echo GH_TOKEN=$GH_TOKEN >> .env
            export $(cat .env | xargs)
            deno run -q --allow-read --allow-write --allow-run --allow-net --allow-env --unstable cli/daily_products.ts '${{matrix.index}}'
