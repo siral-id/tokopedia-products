@@ -22,7 +22,7 @@ const fetchWithRetry = async <T>(
   url: string,
   requestOptions: RequestInit,
   retryCount = 0,
-  maxRetry = 10,
+  maxRetry = 15,
   lastError?: string,
 ): Promise<T> => {
   console.log(`current retry: ${retryCount} & max retry: ${maxRetry}`);
@@ -41,7 +41,13 @@ const fetchWithRetry = async <T>(
   } catch (error) {
     console.error(error);
     await sleep(retryCount);
-    return await fetchWithRetry(url, requestOptions, retryCount + 1, error);
+    return await fetchWithRetry(
+      url,
+      requestOptions,
+      retryCount + 1,
+      maxRetry,
+      error,
+    );
   }
 };
 
