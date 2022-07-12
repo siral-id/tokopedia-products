@@ -50,10 +50,10 @@ jobs:
 
       - name: Fetch Tokopedia Recommended Product
         run: |
-           echo HTTPS_PROXY=$HTTPS_PROXY >> .env
+           echo HTTP_PROXY=$HTTP_PROXY >> .env
            echo GH_TOKEN=$GH_TOKEN >> .env
            export $(cat .env | xargs)
            deno run -q --allow-read --allow-write --allow-run --allow-net --allow-env --unstable cli/daily_products.ts '${{matrix.index}}'
         env:
           GH_TOKEN: ${{ secrets[matrix.GH_TOKEN] }}
-          HTTPS_PROXY: ${{ secrets.HTTPS_PROXY }}
+          HTTP_PROXY: ${{ secrets.HTTP_PROXY }}
