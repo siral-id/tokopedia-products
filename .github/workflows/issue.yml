@@ -51,11 +51,13 @@ jobs:
       - if: startsWith(github.event.issue.title, 'FORWARD_TREND') == true
         name: populate trending products
         run: |
+           echo HTTPS_PROXY=$HTTPS_PROXY >> .env
            echo GH_TOKEN=$GH_TOKEN >> .env
            export $(cat .env | xargs)
            deno run -q --allow-read --allow-write --allow-run --allow-net --allow-env --unstable cli/trending_products.ts '${{ github.event.issue.body }}' '${{matrix.index}}'
         env:
           GH_TOKEN: ${{ secrets[matrix.GH_TOKEN] }}
+          HTTPS_PROXY: ${{ secrets.HTTPS_PROXY }}
 
       - if: startsWith(github.event.issue.title, 'FORWARD_TREND') == true
         name: Close Issue
